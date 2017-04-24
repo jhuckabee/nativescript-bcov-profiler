@@ -1,0 +1,26 @@
+// Add your native dependencies here:
+
+// Uncomment to add recyclerview-v7 dependency
+//dependencies {
+//	compile 'com.android.support:recyclerview-v7:+'
+//}
+
+android {
+  defaultConfig {
+    generatedDensities = []
+    applicationId = "org.nativescript.brightcovememtest"
+  }
+  aaptOptions {
+    additionalParameters "--no-version-vectors"
+  }
+}
+
+repositories {
+  maven {
+    url "http://repo.brightcove.com/releases"
+  }
+}
+
+dependencies {
+  compile "com.brightcove.player:exoplayer:4.13.4"
+}
