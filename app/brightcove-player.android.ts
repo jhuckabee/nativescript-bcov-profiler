@@ -62,13 +62,13 @@ export class BrightcovePlayer extends View {
   }
 
   public onUnloaded() {
-    console.log('BrightcovePlayer.onUnloaded');
     let fragmentManager: android.app.FragmentManager = this._context.getFragmentManager();
-    console.log('onUnloaded before commit')
     fragmentManager.beginTransaction().remove(this.fragment).commit();
-    console.log('onUnloaded after commit')
-    this.fragment = undefined;
-    this._android = undefined;
+    fragmentManager.popBackStack();
+    this.fragment = null;
+    this.frameLayout = null;
+    this._android = null;
+    setTimeout(() => gc(), 1000);
   }
 }
 
@@ -94,18 +94,11 @@ export class PlayerFragment extends com.brightcove.player.view.BrightcovePlayerF
   }
 
   public onDestroyView() {
-      console.log('PlayerFragment.onDestroyView');
-      this.brightcoveVideoView.stopPlayback();
-      this.brightcoveVideoView.clear();
-
-      // https://brightcovelearning.github.io/Brightcove-API-References/android-sdk/javadoc/com/brightcove/player/display/VideoDisplayComponent.html
-      // Says: EventType.STOP: stops the video and destroys the player
-      this.brightcoveVideoView.getVideoDisplay().getEventEmitter().emit(com.brightcove.player.event.EventType.STOP);
-
-      // https://groups.google.com/forum/#!searchin/brightcove-native-player-sdks/android$2C$20memory%7Csort:relevance/brightcove-native-player-sdks/t4n6FvdgvMs/vxzL5aIiXRUJ
-      // this.brightcoveVideoView.getEventEmitter().off()
-
       super.onDestroyView();
+      this.videoId = null;
+      this.brightcoveVideoView = null;
+      this.layout = null;
+      setTimeout(() => gc(), 1000);
   }
 
 }
